@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "not-enough-secrets"
+version = "0.1.0"
+description = "basic cli tool for file encryption"
+requires-python = ">= 3.10"
+authors = [
+    { name = "SR", email = "srichters@uni-muenster.de" },
+]
+maintainers = [
+    { name = "SR", email = "srichters@uni-muenster.de" },
+]
+readme = "README.md"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Security :: Cryptography",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+license = "MIT"
+
+[project.urls]
+Source = "https://github.com/RichtersFinger/not-enough-secrets"
+
+[project.optional-dependencies]
+crypto = ["cryptography"]
+
+[project.scripts]
+not-enough-secrets = "not_enough_secrets.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
