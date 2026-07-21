@@ -2,7 +2,7 @@
 
 import unittest
 
-from not_enough_secrets.lib import core, exceptions
+from not_enough_secrets.lib import core, codec, registry, modules, exceptions
 
 
 class CoreTest(unittest.TestCase):
@@ -35,3 +35,13 @@ class CoreTest(unittest.TestCase):
         self.assertEqual(
             core.parse_module_spec("aesgcm-1:mode=x"), ("aesgcm-1", "mode=x")
         )
+
+    @unittest.skipUnless(
+        modules.aes_gcm.AesGcmModule.is_available(),
+        "cryptography is not installed",
+    )
+    def test_header_stores_resolved_default_options(self):
+        """Test generation and parsing of module options."""
+        blob = core.encrypt(b"data", b"pw", "aes-gcm-0")
+        header, _ = codec.decode(blob)
+        self.assertEqual(header.module_options, "256")
