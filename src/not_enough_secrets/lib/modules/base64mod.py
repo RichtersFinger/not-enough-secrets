@@ -6,11 +6,16 @@ and debugging and must not be used to protect real data. The key is
 stored in clear in the payload.
 """
 
+import logging
 import base64
 import binascii
 
 from .. import exceptions
 from .base import Module, ModuleInfo
+
+
+log = logging.getLogger(__name__)
+
 
 _KEY_LENGTH_BYTES = 4
 _BYTE_ORDER = "big"
@@ -33,7 +38,7 @@ class Base64Module(Module):
             version="1",
             priority=0,
             description=(
-                "UNSAFE base64 obfuscation for tests and debugging only"
+                "UNSAFE base64 obfuscation (for tests and debugging only)"
             ),
             options_help="none",
             requirements="none, uses the standard library only",
@@ -48,6 +53,10 @@ class Base64Module(Module):
         return True
 
     def encrypt(self, plaintext: bytes, key: bytes) -> bytes:
+        log.warning(
+            "base64 obfuscation is UNSAFE; do not use as replacement for "
+            + "actual encryption"
+        )
         body = _encode_key(key) + key + plaintext
         return base64.b64encode(body)
 
