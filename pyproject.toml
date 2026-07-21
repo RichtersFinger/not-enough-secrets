@@ -31,7 +31,7 @@ license = "MIT"
 Source = "https://github.com/RichtersFinger/not-enough-secrets"
 
 [project.optional-dependencies]
-crypto = ["cryptography"]
+cryptography = ["cryptography==48.0.1"]
 
 [project.scripts]
 not-enough-secrets = "not_enough_secrets.cli:main"
