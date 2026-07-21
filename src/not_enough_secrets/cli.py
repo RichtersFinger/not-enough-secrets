@@ -60,7 +60,10 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument(
             "-m",
             "--module",
-            help="module identifier and options, for example base64",
+            help=(
+                "module identifier and options with format 'id:opt'; "
+                + "example: 'aes-gcm-0:128'"
+            ),
         )
         command.add_argument(
             "--stdout",
