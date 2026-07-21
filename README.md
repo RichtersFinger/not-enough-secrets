@@ -24,7 +24,6 @@ You get prompted for the key on stdin.
 ## Install
 
 From the Python Package Index:
-
 ```bash
 pip install not-enough-secrets
 ```
@@ -32,6 +31,7 @@ or install with extra `cryptography` (enabling, for example, AES-GCM)
 ```bash
 pip install not-enough-secrets[cryptography]
 ```
+Use the file `completions.bash` to set up autocomplete in `bash` shells.
 
 From a Debian package:
 Download a release package and enter
@@ -83,33 +83,26 @@ Older files keep working because the matching module version stays around to rea
 
 ## Build
 
+This project uses Docker to create reproducible builds.
+
+Build the Python distributions with
+```bash
+make up
+make build-wheel
+make down
 ```
-# placeholder: build the Python package
-# placeholder: build the .deb
+
+Build a DEB-file with
+```bash
+make build-deb
 ```
 
 ## Development
 
+The `Makefile` defines some helpful targets for local development:
+```bash
+make up
+make install
+make test
+make down
 ```
-# placeholder: set up a dev environment
-# placeholder: run the tests
-```
-
-## Future Additions
-
-Without any specific order:
-
-- **Streaming**: add support for encrypting/decrypting a stream
-- **Detect**: add a `detect` command to identify a file (attempt to read and print file header)
-- **Module id validation**: add validation of module id to be alphanumeric+"-" (maybe in registry on load)
-- **Modules**:
-  - system's open-ssl
-  - ?
-- **Options**:
-  - option to skip key confirmation on encode
-- **Tests**:
-  - add fixtures for all modules (+their versions) to ensure backwards compatibility
-- **Misc**:
-  - fix missing newline when using `--stdout`
-  - consider support a short-hand/convenience cli invocation (only base command, then decide whether encrypt/decrypt through file header analysis)
-  - add prominent warning when running `base64mod`
