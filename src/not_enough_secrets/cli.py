@@ -36,6 +36,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub = parser.add_subparsers(dest="command", required=True)
 
+    complete_parser = sub.add_parser("_complete", help=argparse.SUPPRESS)
+    complete_parser.add_argument("what", choices=["modules"])
+
     sub.add_parser("version", help="show the package version")
 
     modules_parser = sub.add_parser("modules", help="list available modules")
@@ -116,6 +119,8 @@ def _configure_logging(args: argparse.Namespace) -> None:
 
 
 def _dispatch(args: argparse.Namespace) -> int:
+    if args.command == "_complete":
+        return _cmd_complete(args)
     if args.command == "version":
         return _cmd_version()
     if args.command == "modules":
@@ -125,6 +130,17 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "decrypt":
         return _cmd_decrypt(args)
     raise exceptions.NesError(f"unknown command: {args.command}")
+
+
+def _cmd_complete(args: argparse.Namespace) -> int:
+    """Print completion candidates for the bash completion script.
+
+    :param args: parsed arguments carrying `what` to complete
+    """
+    if args.what == "modules":
+        for module_cls in registry.available_modules():
+            print(module_cls.info().identifier)
+    return 0
 
 
 def _cmd_version() -> int:
