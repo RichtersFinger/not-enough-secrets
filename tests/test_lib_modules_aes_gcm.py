@@ -4,8 +4,9 @@ The whole suite is skipped when the cryptography package is not installed.
 """
 
 import unittest
+from pathlib import Path
 
-from not_enough_secrets.lib import exceptions
+from not_enough_secrets.lib import exceptions, core
 from not_enough_secrets.lib.modules.aes_gcm import AesGcmModule
 
 
@@ -69,3 +70,13 @@ class AesGcmModuleTest(unittest.TestCase):
         """Test behavior for invalid key size value."""
         with self.assertRaises(exceptions.OptionError):
             AesGcmModule("big")
+
+    def test_backwards_compatibility(self):
+        """Test decrypting existing file."""
+        unencrypted = Path("tests/fixtures/aes-gcm-0.txt")
+        encrypted = unencrypted.with_suffix(".txt.nes")
+
+        self.assertEqual(
+            core.decrypt(encrypted.read_bytes(), b"test", None),
+            unencrypted.read_bytes(),
+        )

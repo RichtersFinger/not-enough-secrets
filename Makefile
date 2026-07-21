@@ -45,10 +45,10 @@ shell: up
 	${PYTHON_SHELL} sh
 
 install: up
-	${PYTHON_SHELL} pip install .
+	${PYTHON_SHELL} pip install ".[cryptography]"
 
 test:
-	python3 -m unittest discover tests/
+	${PYTHON_SHELL} python3 -m unittest discover tests/ ${ARGS}
 
 build-wheel: up
 	${PYTHON_SHELL} sh -c "pip install --upgrade build==1.5.0 && python -m build --wheel --sdist"

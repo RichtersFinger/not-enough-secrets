@@ -4,8 +4,9 @@ The whole suite is skipped when the cryptography package is not installed.
 """
 
 import unittest
+from pathlib import Path
 
-from not_enough_secrets.lib import exceptions
+from not_enough_secrets.lib import exceptions, core
 from not_enough_secrets.lib.modules.fernet import FernetModule
 
 
@@ -51,3 +52,13 @@ class FernetModuleTest(unittest.TestCase):
         """Test behavior for unexpected options."""
         with self.assertRaises(exceptions.OptionError):
             FernetModule("mode=x")
+
+    def test_backwards_compatibility(self):
+        """Test decrypting existing file."""
+        unencrypted = Path("tests/fixtures/fernet-0.txt")
+        encrypted = unencrypted.with_suffix(".txt.nes")
+
+        self.assertEqual(
+            core.decrypt(encrypted.read_bytes(), b"test", None),
+            unencrypted.read_bytes(),
+        )

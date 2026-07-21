@@ -2,8 +2,9 @@
 
 import base64
 import unittest
+from pathlib import Path
 
-from not_enough_secrets.lib import exceptions
+from not_enough_secrets.lib import exceptions, core
 from not_enough_secrets.lib.modules.base64mod import Base64Module
 
 
@@ -38,3 +39,13 @@ class Base64ModuleTest(unittest.TestCase):
         """Test behavior for unknown option."""
         with self.assertRaises(exceptions.OptionError):
             Base64Module("mode=x")
+
+    def test_backwards_compatibility(self):
+        """Test decrypting existing file."""
+        unencrypted = Path("tests/fixtures/base64.txt")
+        encrypted = unencrypted.with_suffix(".txt.nes")
+
+        self.assertEqual(
+            core.decrypt(encrypted.read_bytes(), b"test", None),
+            unencrypted.read_bytes(),
+        )
