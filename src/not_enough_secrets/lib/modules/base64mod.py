@@ -40,6 +40,9 @@ class Base64Module(Module):
             supports_streaming=False,
         )
 
+    def options_string(self) -> str:
+        return ""
+
     @classmethod
     def is_available(cls) -> bool:
         return True

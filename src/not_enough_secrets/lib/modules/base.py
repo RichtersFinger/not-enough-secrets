@@ -53,6 +53,14 @@ class Module(abc.ABC):
     def info(cls) -> ModuleInfo:
         """Return static information about the module."""
 
+    @abc.abstractmethod
+    def options_string(self) -> str:
+        """Return the canonical options for this instance.
+
+        Reflects the settings actually in use, including any defaults, so the
+        header stores what is needed to reconstruct the module on decrypt.
+        """
+
     @classmethod
     @abc.abstractmethod
     def is_available(cls) -> bool:

@@ -38,7 +38,9 @@ def encrypt(plaintext: bytes, key: bytes, module_spec: str | None) -> bytes:
     module = module_cls(options)
     payload = module.encrypt(plaintext, key)
     header = codec.Header(
-        app_version=APP_VERSION, module_id=identifier, module_options=options
+        app_version=APP_VERSION,
+        module_id=identifier,
+        module_options=module.options_string(),
     )
     return codec.encode(header) + payload
 
