@@ -1,0 +1,12 @@
+Package: not-enough-secrets
+Version: 0.1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python3 (>= 3.10), bash-completion
+Recommends: python3-cryptography
+Maintainer: SR <srichters@uni-muenster.de>
+Homepage: https://github.com/RichtersFinger/not-enough-secrets
+Description: basic cli tool for file encryption
+ A small command line tool for encrypting and decrypting files with
+ pluggable modules.
