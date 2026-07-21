@@ -2,7 +2,7 @@
 
 import unittest
 
-from not_enough_secrets.lib import core, codec, registry, modules, exceptions
+from not_enough_secrets.lib import core, codec, modules, exceptions
 
 
 class CoreTest(unittest.TestCase):
