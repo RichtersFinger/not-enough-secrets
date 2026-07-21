@@ -9,12 +9,14 @@ from .exceptions import NoModulesAvailableError, UnknownModuleError
 from .modules.base import Module
 from .modules.base64mod import Base64Module
 from .modules.aes_gcm import AesGcmModule
+from .modules.fernet import FernetModule
 
 
 # Every registered module class. Extend this list to add modules.
 _MODULES: list[type[Module]] = [
     Base64Module,
     AesGcmModule,
+    FernetModule,
 ]
 
 
