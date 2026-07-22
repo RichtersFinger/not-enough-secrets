@@ -80,9 +80,13 @@ build-deb-native:
 	install -m 0644 "$(CURDIR)/README.md" "$(DEB_DOCDIR)/readme"
 	install -m 0644 "$(CURDIR)/LICENSE" "$(DEB_DOCDIR)/copyright"
 	install -d "$(DEB_COMPDIR)"
-	install -m 0644 "$(CURDIR)/completion.bash" "$(DEB_COMPDIR)/not-enough-secrets"
+	install -m 0644 "$(CURDIR)/completion.bash" "$(DEB_COMPDIR)/$(DEB_PACKAGE)"
 	install -d "$(DEB_BINDIR)"
-	install -m 0755 "$(CURDIR)/not-enough-secrets.sh" "$(DEB_BINDIR)/not-enough-secrets"
+	install -m 0755 "$(CURDIR)/not-enough-secrets.sh" "$(DEB_BINDIR)/$(DEB_PACKAGE)"
+	install -d "$(DEB_PKGDIR)-$(DEB_VERSION).dist-info"
+	echo "Metadata-Version: 2.1" > "$(DEB_PKGDIR)-$(DEB_VERSION).dist-info/METADATA"
+	echo "Name: $(DEB_PACKAGE)" >> "$(DEB_PKGDIR)-$(DEB_VERSION).dist-info/METADATA"
+	echo "Version: $(DEB_VERSION)" >> "$(DEB_PKGDIR)-$(DEB_VERSION).dist-info/METADATA"
 	dpkg-deb --build --root-owner-group "$(DEB_STAGE)" "$(DEB_OUT)"
 
 clean:
