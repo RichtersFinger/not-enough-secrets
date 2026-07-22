@@ -19,7 +19,7 @@ PYTHON_CONTAINER_RUNNING := docker ps -q -f name=$(PYTHON_CONTAINER_NAME)
 PYTHON_SHELL := docker exec -it ${PYTHON_CONTAINER_NAME}
 
 DEB_PACKAGE    := not-enough-secrets
-DEB_VERSION    := 0.1.0
+DEB_VERSION    := 0.1.1
 DEB_ARCH       := all
 DEB_STAGE_ROOT := $(CURDIR)
 DEB_STAGE      := $(DEB_STAGE_ROOT)/build/$(DEB_PACKAGE)
